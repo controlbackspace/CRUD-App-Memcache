@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "Basic_CRUD_Application",
+    "slug": "Basic_CRUD_Application",
+    "version": "1.0.0",
+    "platforms": ["ios", "android", "web"],
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}
