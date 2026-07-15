@@ -89,12 +89,27 @@ export default function PersonsListScreen() {
   const renderPersonCard = ({ item }) => {
     const recordId = item.id !== undefined ? item.id : item.rowid;
 
+    // Automated fallback calculation helper
+    const getAutomatedAge = () => {
+      if (item.age !== undefined && item.age !== null) return item.age;
+      if (!item.dob) return '--';
+      
+      const birth = new Date(item.dob);
+      const now = new Date();
+      let calculatedAge = now.getFullYear() - birth.getFullYear();
+      if (now.getMonth() < birth.getMonth() || (now.getMonth() === birth.getMonth() && now.getDate() < birth.getDate())) {
+        calculatedAge--;
+      }
+      return calculatedAge > 0 ? calculatedAge : 0;
+    };
+
     return (
       <View style={styles.card}>
         <View style={styles.cardInfo}>
           <Text style={styles.nameText}>{item.firstname} {item.lastname}</Text>
           <Text style={styles.detailText}>DOB: {item.dob} • Sex: {item.sex}</Text>
-          <Text style={styles.ageBadge}>Age: {item.age}</Text>
+          {/* Static, non-clickable automated display badge */}
+          <Text style={styles.ageBadge}>Age: {getAutomatedAge()}</Text>
         </View>
         <View style={styles.actionColumn}>
           <TouchableOpacity 
@@ -108,10 +123,7 @@ export default function PersonsListScreen() {
           </TouchableOpacity>
           <TouchableOpacity 
             style={[styles.actionButton, styles.deleteButton]} 
-            onPress={() => {
-              console.log("Step 1: Delete button clicked! Raw item:", item);
-              handleDeleteCheck(recordId, `${item.firstname} ${item.lastname}`);
-            }}
+            onPress={() => handleDeleteCheck(recordId, `${item.firstname} ${item.lastname}`)}
           >
             <Text style={styles.deleteText}>Delete</Text>
           </TouchableOpacity>

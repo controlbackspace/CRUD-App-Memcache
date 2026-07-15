@@ -29,6 +29,7 @@ const setStoredToken = (token) => {
 };
 
 export const AuthContext = createContext({}); 
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(getStoredToken()); 
@@ -70,6 +71,34 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const register = async (username, password) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(`${AUTH_URL}/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Registration failed.');
+      }
+
+      return { success: true };
+    } catch (err) {
+      console.error('❌ Registration Error:', err.message);
+      setError(err.message);
+      return { success: false, error: err.message };
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const logout = () => {
     setToken(null);
     setStoredToken(null); 
@@ -77,7 +106,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ token, user, loading, error, login, logout }}>
+    <AuthContext.Provider value={{ token, user, loading, error, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );
