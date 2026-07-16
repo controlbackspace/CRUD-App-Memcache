@@ -24,7 +24,7 @@ This registry showcases complete operational parity between mobile emulation and
 
 | Web Target | Android Emulator |
 | :---: | :---: |
-| ![Web Login](./assets/login.png) | ![Android Login](./assets/android-login.png) |
+| ![Web Login](./assets/login.gif) | ![Android Login](./assets/android-login.gif) |
 
 ---
 
@@ -47,7 +47,8 @@ This registry showcases complete operational parity between mobile emulation and
 
 | Web Target | Android Emulator |
 | :---: | :---: |
-| ![Web Logout](./assets/logout.png) | ![Android Logout](./assets/android-logout.png) |
+| ![Web Logout](./assets/logout.gif) | ![Android Logout](./assets/android-logout.gif) |
+
 
 ---
 
