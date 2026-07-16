@@ -19,8 +19,7 @@ This registry showcases complete operational parity between mobile emulation and
 ---
 
 ### 2. User Authentication (Login)
-* **The Goal**: Securely authenticate existing users and issue a dynamic JSON Web Token (JWT) for secure session management.
-* **Key Mechanism**: Platform-aware storage (`localStorage` for Web / React Native context bindings) holds active session tokens.
+
 
 | Web Target | Android Emulator |
 | :---: | :---: |
@@ -29,7 +28,6 @@ This registry showcases complete operational parity between mobile emulation and
 ---
 
 ### 3. Persons Registry (Full CRUD Operations)
-* **The Goal**: Securely Create, Read, Update, and Delete person records.
 * **Key Mechanisms**:
   * **Automated Age Calculation**: When you input a Date of Birth (YYYY-MM-DD), the application automatically computes and displays the non-clickable, exact age in real-time.
   * **Dropdown Validation**: Selecting "Sex assigned at birth" utilizes a custom, zero-dependency native modal selection window.
@@ -42,8 +40,7 @@ This registry showcases complete operational parity between mobile emulation and
 ---
 
 ### 4. Session Termination (Logout)
-* **The Goal**: Instantly invalidate local session keys and redirect back to the entry gateway.
-* **Key Mechanism**: Secure state teardown completely wipes stored tokens and user contexts from memory.
+
 
 | Web Target | Android Emulator |
 | :---: | :---: |
