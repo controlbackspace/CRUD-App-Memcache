@@ -7,10 +7,9 @@ import {
   StyleSheet, 
   TouchableOpacity, 
   ActivityIndicator,
-  Platform,
-  Modal,
-  FlatList
+  Platform
 } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 
 const SEX_OPTIONS = ['Male', 'Female'];
 
@@ -19,7 +18,6 @@ export default function PersonForm({ initialData, onSave, onCancel, isLoading })
   const [lastname, setLastname] = useState('');
   const [dob, setDob] = useState('');
   const [sex, setSex] = useState('Male');
-  const [showDropdown, setShowDropdown] = useState(false); // EXISTING - Toggle dropdown visibility
 
   useEffect(() => {
     if (initialData) {
@@ -119,53 +117,24 @@ export default function PersonForm({ initialData, onSave, onCancel, isLoading })
 
       <Text style={styles.label}>Sex assigned at birth</Text>
       
-      {/* FIX: Custom Dropdown Trigger */}
-      <TouchableOpacity 
-        style={styles.dropdownTrigger} 
-        onPress={() => setShowDropdown(true)}
-        activeOpacity={0.7}
-      >
-        <Text style={styles.dropdownTriggerText}>{sex}</Text>
-        <Text style={styles.dropdownArrow}>▼</Text>
-      </TouchableOpacity>
-
-      {/* FIX: Zero-Dependency Selection Modal */}
-      <Modal
-        visible={showDropdown}
-        transparent={true}
-        animationType="fade"
-        onRequestClose={() => setShowDropdown(false)}
-      >
-        <TouchableOpacity 
-          style={styles.modalOverlay} 
-          activeOpacity={1} 
-          onPress={() => setShowDropdown(false)}
+     <View style={styles.pickerWrapper}>
+      {/* ^^^ FIX: Styled container bounding box */}
+        <Picker
+          selectedValue={sex}
+          onValueChange={(itemValue) => setSex(itemValue)}
+          dropdownIconColor="#4b5563"
+          style={styles.picker}
         >
-          <View style={styles.dropdownModalContent}>
-            <Text style={styles.dropdownModalTitle}>Select Sex</Text>
-            {SEX_OPTIONS.map((item) => (
-              <TouchableOpacity
-                key={item}
-                style={[
-                  styles.dropdownItem,
-                  sex === item && styles.dropdownItemSelected
-                ]}
-                onPress={() => {
-                  setSex(item);
-                  setShowDropdown(false);
-                }}
-              >
-                <Text style={[
-                  styles.dropdownItemText,
-                  sex === item && styles.dropdownItemTextSelected
-                ]}>
-                  {item}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </TouchableOpacity>
-      </Modal>
+        {/* ^^^ FIX: Native dropdown control replacing TouchableOpacity */}
+          {SEX_OPTIONS.map((option) => (
+            <Picker.Item 
+              key={option} 
+              label={option} 
+              value={option} 
+            />
+          ))}
+        </Picker>
+      </View>
 
       <View style={styles.buttonRow}>
         <TouchableOpacity 
@@ -241,6 +210,26 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 10
   },
+  pickerWrapper: {
+    backgroundColor: '#f9fafb',
+    borderWidth: 1,
+    borderColor: '#d1d5db',
+    borderRadius: 6,
+    overflow: 'hidden',
+    justifyContent: 'center',
+    minHeight: 48,
+  },
+  picker: {
+    height: Platform.OS === 'web' ? 48 : 50,
+    width: '100%',
+    color: '#111827',
+    backgroundColor: 'transparent',
+    borderWidth: 0,
+    ...(Platform.OS === 'web' && {
+      outlineStyle: 'none',
+      cursor: 'pointer',
+    }),
+  },
   dropdownModalTitle: {
     fontSize: 16,
     fontWeight: 'bold',
@@ -284,4 +273,5 @@ const styles = StyleSheet.create({
   cancelButtonText: { color: '#4b5563', fontWeight: '600' },
   saveButton: { backgroundColor: '#007AFF' },
   saveButtonText: { color: '#fff', fontWeight: '600' }
+  
 });

@@ -221,26 +221,60 @@ const styles = StyleSheet.create({
   container: { 
     flex: 1, 
     backgroundColor: '#f3f4f6',
-    position: 'relative',
     width: '100%',
-    minHeight: '100%'
+    // FIX: Lock the screen container exactly to the device's physical viewport height
+    height: Platform.OS === 'web' ? 'auto' : '100%',
   },
   header: { 
-    flexDirection: 'row', 
+    flexDirection: Platform.OS === 'web' ? 'row' : 'column', // Stacks on small mobile screens to prevent text clipping
     justifyContent: 'space-between', 
-    alignItems: 'center', 
+    alignItems: Platform.OS === 'web' ? 'center' : 'stretch', 
     padding: 16, 
     backgroundColor: '#fff', 
     borderBottomWidth: 1, 
-    borderBottomColor: '#e5e7eb' 
+    borderBottomColor: '#e5e7eb',
+    gap: 12
   },
-  headerTitle: { fontSize: 20, fontWeight: 'bold', color: '#111827' },
-  headerActions: { flexDirection: 'row', alignItems: 'center', gap: 12 },
-  headerAddButton: { backgroundColor: '#007AFF', paddingVertical: 6, paddingHorizontal: 12, borderRadius: 6 },
-  headerAddButtonText: { color: '#fff', fontWeight: '600' },
-  logoutButton: { paddingVertical: 6, paddingHorizontal: 12, borderRadius: 6, backgroundColor: '#ef4444' },
-  logoutText: { color: '#fff', fontWeight: '600' },
-  listContainer: { padding: 16, paddingBottom: 100 },
+  headerTitle: { 
+    fontSize: 20, 
+    fontWeight: 'bold', 
+    color: '#111827',
+    textAlign: Platform.OS === 'web' ? 'left' : 'center'
+  },
+  headerActions: { 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    justifyContent: 'center',
+    gap: 8,
+    // FIX: Allow items to wrap dynamically on narrow screen sizes instead of sliding off-screen
+    flexWrap: 'wrap'
+  },
+  headerAddButton: { 
+    backgroundColor: '#007AFF', 
+    paddingVertical: 8, 
+    paddingHorizontal: 12, 
+    borderRadius: 6 
+  },
+  headerAddButtonText: { 
+    color: '#fff', 
+    fontWeight: '600',
+    fontSize: 14 
+  },
+  logoutButton: { 
+    paddingVertical: 8, 
+    paddingHorizontal: 12, 
+    borderRadius: 6, 
+    backgroundColor: '#ef4444' 
+  },
+  logoutText: { 
+    color: '#fff', 
+    fontWeight: '600',
+    fontSize: 14 
+  },
+  listContainer: { 
+    padding: 16, 
+    paddingBottom: Platform.OS === 'web' ? 100 : 120 // Prevents cards from sliding behind the FAB
+  },
   card: { 
     flexDirection: 'row', 
     backgroundColor: '#fff', 
@@ -279,7 +313,8 @@ const styles = StyleSheet.create({
   emptyText: { textAlign: 'center', color: '#6b7280', marginTop: 40, fontSize: 16 },
   fab: {
     position: 'absolute',
-    bottom: 24,
+    // FIX: Anchors the floating action button consistently relative to the mobile hardware bounds
+    bottom: Platform.OS === 'web' ? 24 : 32,
     right: 24,
     backgroundColor: '#007AFF',
     width: 56,
