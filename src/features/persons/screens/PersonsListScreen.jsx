@@ -136,7 +136,7 @@ export default function PersonsListScreen() {
     <View style={styles.container}>
       {/* Header Bar */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Persons Registry (v2-Updated)</Text>
+        <Text style={styles.headerTitle}>CRUD App</Text>
         <View style={styles.headerActions}>
           <TouchableOpacity 
             style={styles.headerAddButton} 

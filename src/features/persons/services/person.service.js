@@ -1,8 +1,6 @@
 // C:\Users\jakea\Basic_CRUD_Application\src\services\persons.service.js
 import { Platform } from 'react-native'; 
-// ^^^ EXISTING: Crucial platform detection tool
 
-// FIX: Helper declared BEFORE BASE_URL initialization
 const getBaseUrl = () => {
   if (Platform.OS === 'android') {
     return 'http://10.0.2.2:5000/api/persons'; 
@@ -11,9 +9,7 @@ const getBaseUrl = () => {
 };
 
 const BASE_URL = getBaseUrl();
-// ^^^ FIX: Unified single declaration evaluated at runtime without duplicate variable bindings
 
-// FIX: Single, clean export module containing all resolved operations
 export const personsService = {
   getAll: async (token) => {
     const response = await fetch(BASE_URL, {
@@ -69,4 +65,3 @@ export const personsService = {
     return data;
   }
 };
-// ^^^ FIX: Standardized, deduplicated, and clean service architecture

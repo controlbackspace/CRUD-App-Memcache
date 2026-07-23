@@ -10,7 +10,6 @@ const db = new sqlite3.Database(dbPath, (err) => {
   } else {
     console.log('✔ Successfully connected to the physical SQLite3 database file.');
     
-    // Create tables if they do not exist to prevent schema mismatches
     db.serialize(() => {
       // 1. Create users table
       db.run(`

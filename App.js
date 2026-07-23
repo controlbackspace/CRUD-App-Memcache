@@ -20,7 +20,7 @@ function NavigationRouter() {
   }
 
   if (user) {
-    return <PersonsListScreen />; // FIX: Render the interactive list screen with modal handlers
+    return <PersonsListScreen />; 
   }
 
   return currentScreen === 'login' ? (
